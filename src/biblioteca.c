@@ -6,329 +6,23 @@
 #include <ctype.h>
 #include <conio.h>
 #include <windows.h>
-
-
-int IngresarNumero(char mensaje[]){
-	int numeroIngresado;
-	printf("%s",mensaje);
-	scanf("%d",&numeroIngresado);
-	return numeroIngresado;
-}
-int IngresarTexto(char mensaje[],int tam){
-	int actividad=0;
-	char aux[tam];
-	printf("Ingrese un texto: ");
-	fflush(stdin);
-	scanf("%s",aux);
-	while(strnlen(aux,sizeof(aux))>tam){
-		printf("Se excedio el maximo de caracteres, por favor ingrese menos de %d caracteres",tam);
-		fflush(stdin);
-		scanf("%s",aux);
-		actividad=1;
-	}
-
-	strncpy(aux,mensaje,sizeof(aux));
-	printf("El texto ingresado fue: %s",mensaje);
-	return actividad;
-}
-int IngresarNumeroRango(char mensaje[],int rangoMin,int rangoMax){
-	int numeroIngresado;
-	numeroIngresado=IngresarNumero(mensaje);
-	while(numeroIngresado<rangoMin||numeroIngresado>rangoMax){
-		printf("FUERA DE RANGO: ingrese un numero entre %d y %d\n",rangoMin,rangoMax);
-		numeroIngresado=IngresarNumero(mensaje);
-	}
-	return numeroIngresado;
-}
-void IngresarNumeroPosicionAleatorioExcluyente(int vector[],int tam,int cantidadIngresos,char excluyente){
-	int i;
-	int posicionVector;
-	for(i=0;i<cantidadIngresos;i++){
-		printf("Elija una posicion del Vector entre 1 y %d: ",tam);
-		scanf("%d",&posicionVector);
-		posicionVector--;
-		while(posicionVector<0||posicionVector>tam-1){
-			printf("Posicion invalida, ingrese una posicion entre 1 y %d: ",tam);
-			scanf("%d",&posicionVector);
-			posicionVector--;
-		}
-		switch(excluyente){
-			case 'N':
-				printf("Ingrese un numero: ");
-				scanf("%d",&vector[posicionVector]);
-				break;
-			case '0':
-				printf("Ingrese un numero: ");
-				scanf("%d",&vector[posicionVector]);
-				while(ValidarCero(vector[posicionVector])==1){
-					printf("DATO INVALIDO, Ingrese un numero distinto de cero: ");
-					scanf("%d",&vector[posicionVector]);
-				}
-				break;
-		}
-
-	}
-}
-int ValidarCero(int numeroIngresado){
-	if(numeroIngresado==0){
-		return 1;
-	}
-	else{
-		return 0;
-	}
-}
-int VerificarParImpar(int numeroIngresado){
-	if(numeroIngresado%2==0){
-		return 0;
-	}
-	else{
-		return 1;
-	}
-
-
-}
-int VerificarPositivoNegativoNeutro(int numeroIngresado){
-	if(numeroIngresado>0){
-		return 1;
-	}
-	else{
-		if(numeroIngresado<0){
-			return -1;
-		}
-		else{
-			return 0;
-		}
-	}
-
-}
-int ContadorGenerico(int vector[],int tam,char contar){
-	int contador=0;
-	int i;
-	for(i=0;i<tam;i++){
-		switch(contar){
-			case 'P':
-				if(VerificarParImpar(vector[i])==0){
-					contador++;
-				}
-				break;
-			case 'I':
-				if(VerificarParImpar(vector[i])==1){
-					contador++;
-				}
-				break;
-			case '+':
-				if(VerificarPositivoNegativoNeutro(vector[i])==1){
-					contador++;
-				}
-				break;
-			case '-':
-				if(VerificarPositivoNegativoNeutro(vector[i])==-1){
-					contador++;
-				}
-				break;
-			case '0':
-				if(VerificarPositivoNegativoNeutro(vector[i])==0){
-					contador++;
-				}
-				break;
-			default:
-				printf("WARNING! ContadorGenerico char[] invalido, use: Pares='P',Impares='I',Positivo='+',Negativo='-',Neutro='0'");
-
-		}
-	}
-	return contador;
-}
-int AcumuladorGenerico(int vector[],int tam,char contar){
-	int acumulador=0;
-	int i;
-	for(i=0;i<tam;i++){
-		switch(contar){
-			case 'P':
-				if(VerificarParImpar(vector[i])==0){
-					acumulador+=vector[i];
-				}
-				break;
-			case 'I':
-				if(VerificarParImpar(vector[i])==1){
-					acumulador+=vector[i];
-				}
-				break;
-			case '+':
-				if(VerificarPositivoNegativoNeutro(vector[i])==1){
-					acumulador+=vector[i];
-				}
-				break;
-			case '-':
-				if(VerificarPositivoNegativoNeutro(vector[i])==-1){
-					acumulador+=vector[i];
-				}
-				break;
-			case '0':
-				if(VerificarPositivoNegativoNeutro(vector[i])==0){
-					acumulador+=vector[i];
-				}
-				break;
-			default:
-				printf("WARNING! AcumuladorGenerico char[] invalido, use: Pares='P',Impares='I',Positivo='+',Negativo='-',Neutro='0'");
-
-		}
-	}
-	return acumulador;
-}
-int ValorMayorGenerico(int vector[],int tam,char mayor){
-	int i;
-	int valorMayor=-32768;
-	for(i=0;i<tam;i++){
-		switch(mayor){
-			case 'I':
-				if(VerificarParImpar(vector[i])==1){
-
-					if(valorMayor<vector[i]){
-						valorMayor=vector[i];
-					}
-				}
-				break;
-		}
-
-	}
-	return valorMayor;
-}
-void MostrarVectorIntGenerico(int vector[],int tam,char mensaje[],char mostrar){
-	int i;
-
-	printf("%s",mensaje);
-	for(i=0;i<tam;i++){
-		switch(mostrar){
-			case 'T':
-				printf("%d\t",vector[i]);
-				break;
-			case 'P':
-				if(VerificarParImpar(vector[i])==0){
-					printf("%d\t",vector[i]);
-				}
-				break;
-			case 'I':
-				if(VerificarParImpar(vector[i])==1){
-					printf("%d\t",vector[i]);
-				}
-				break;
-			case '+':
-				if(VerificarPositivoNegativoNeutro(vector[i])==1){
-					printf("%d\t",vector[i]);
-				}
-				break;
-			case '-':
-				if(VerificarPositivoNegativoNeutro(vector[i])==-1){
-					printf("%d\t",vector[i]);
-				}
-				break;
-			case '0':
-				if(VerificarPositivoNegativoNeutro(vector[i])==0){
-					printf("%d\t",vector[i]);
-				}
-				break;
-			default:
-				printf("WARNING! MostrarVectorIntGenerico char[] invalido, use: TODO='T',Pares='P',Impares='I',Positivo='+',Negativo='-',Neutro='0'");
-		}
-	}
-
-}
-void MostrarPosicionVectorParImpar(int vector[],int tam,char mensaje[],char mostrar){
-	int i;
-
-	printf("%s",mensaje);
-	for(i=0;i<tam;i++){
-		switch(mostrar){
-			case 'P':
-				if(VerificarParImpar(i)==0){
-					printf("Valor de la posicion Par[%d] es %d\n",i,vector[i]);
-				}
-				break;
-			case 'I':
-				if(VerificarParImpar(i)==1){
-					printf("Valor de la posicion Impar[%d] es %d\n",i,vector[i]);
-				}
-				break;
-			default:
-				printf("WARNING! MostrarPosicionVectorParImpar char[] invalido, use: Pares='P',Impares='I'");
-		}
-	}
-
-}
-int IntercambioDeValores(int* a,int* b){
-	int aux;
-	aux=*a;
-	*a=*b;
-	*b=aux;
-
-	return 1;
-}
-int CrearVectorPositivos(int vector[],int tam, int vectorPositivos[]){
-	int i;
-	int actividad=0;
-
-	for(i=0;i<tam;i++){
-		if(VerificarPositivoNegativoNeutro(vector[i])==1||VerificarPositivoNegativoNeutro(vector[i])==0){
-			vectorPositivos[i]=vector[i];
-			actividad=1;
-		}
-	}
-
-
-	return actividad;
-}
-int CrearVectorNegativo(int vector[],int tam,int vectorNegativos[]){
-	int actividad=0;
-
-	for(int i=0;i<tam;i++){
-		if(VerificarPositivoNegativoNeutro(vector[i])==-1){
-			vectorNegativos[i]=vector[i];
-			actividad=1;
-		}
-	}
-
-	return actividad;
-}
-void CambiarValorVector(int vector[],int tam,int seteo){
-	int i;
-	for(i=0;i<tam;i++){
-		vector[i]=seteo;
-	}
-}
-void OrdenarVectorGenerico(int vector[],int tam,char criterio){
-
-	for(int i=0;i<tam;i++){
-		for(int j=i+1;j<tam;j++){
-			switch(criterio){
-			case 'C':
-				if(vector[i]>vector[j]){
-					int aux;
-					aux=vector[i];
-					vector[i]=vector[j];
-					vector[j]=aux;
-				}
-				break;
-			case 'D':
-				if(vector[i]<vector[j]){
-					int aux;
-					aux=vector[i];
-					vector[i]=vector[j];
-					vector[j]=aux;
-				}
-				break;
-			}
-		}
-	}
-}
-//===================================================
+/// @brief pide al usuario ingresar caracteres y de forma segura se guardan en una variable.
+///
+/// @param cadena - es el vector char en la cual se guarda lo que el usuario ingreso
+/// @param tam - es el tamaño del vector char, usado para que no desborde el vector
+/// @return
 int myGets(char* cadena,int tam){
 	fflush(stdin);
 	fgets(cadena,tam,stdin);
 	cadena[strlen(cadena)-1]='\0';
 	return 0;
 }
+/// @brief pide al usuario ingresar caracteres, los lee y checkea que que tenga un formato numero ENTERO
+///
+/// @param pResultado - el puntero por el cual devuelve el entero ingresado y validado.
+/// @return - retorna 1 si el si lo que ingreso el usuario es convertible a int, sino retorna 0
 int getInt(int* pResultado){
-	int retorno=-1;
+	int retorno=1;
 	char buffer[4096];
 
 	if(myGets(buffer,sizeof(buffer))==0&&esNumericaInt(buffer)){
@@ -338,8 +32,12 @@ int getInt(int* pResultado){
 
 	return retorno;
 }
+/// @brief pide al usuario ingresar caracteres, los lee y checkea que que tenga un formato de numero FLOAT
+///
+/// @param pResultado - el puntero por el cual devuelve el float ingresado y validado.
+/// @return - retorna 1 si el si lo que ingreso el usuario es convertible a float, sino retorna 0
 int getFloat(float* pResultado){
-	int retorno=-1;
+	int retorno=1;
 	char buffer[4096];
 
 	if(myGets(buffer,sizeof(buffer))==0&&esNumericaFloat(buffer)){
@@ -349,6 +47,11 @@ int getFloat(float* pResultado){
 
 	return retorno;
 }
+/// @brief Usa lo ingresado por el usuario y checkea si es "texto basico", aceptando solo: ESPACIOS, a-z,A-Z,ñ-Ñ.
+///
+/// @param pResultado - el puntero por el cual devuelve el vector char ingresado y validado.
+/// @param tam - es el tamaño del vector char, usado para que no desborde el vector
+/// @return retorna 0 si algun caracter no es "basico", y 1 si todos los todos los caracteres son basicos.
 int getChar(char* pResultado, int tam){
 	int retorno=0;
 	char buffer[4096];
@@ -360,6 +63,10 @@ int getChar(char* pResultado, int tam){
 
 	return retorno;
 }
+/// @brief toma una cadena de caracteres y checkea que sea numerica del tipo Int
+///
+/// @param cadena - la cadena de caracteres a checkear
+/// @return - retorna 1 si la cadena es numerica del tipo int y 0 si algun caracter no es valido para una variable int.
 int esNumericaInt(char* cadena){
 	int retorno= 1;
 	int i=0;
@@ -374,6 +81,10 @@ int esNumericaInt(char* cadena){
 	}
 	return retorno;
 }
+/// @brief toma una cadena de caracteres y checkea que sea numerica del tipo float
+///
+/// @param cadena - la cadena de caracteres a checkear
+/// @return - retorna 1 si la cadena es numerica del tipo float y 0 si algun caracter no es valido para una variable float.
 int esNumericaFloat(char* cadena){
 	int retorno= 1;
 	int i=0;
@@ -403,12 +114,15 @@ int esNumericaFloat(char* cadena){
 	}
 	return retorno;
 }
+/// @brief checkea si es "texto basico", aceptando solo: ESPACIOS, a-z,A-Z,ñ-Ñ.
+///
+/// @param cadena - la cadena de caracteres a checkear
+/// @return retorna 1 si la cadena es denominada como "texto basico" sino retorna 0.
 int esTextoBasico(char* cadena){
 	int retorno= 1;
 		int i;
 
 		for(i=0;cadena[i]!='\0';i++){
-			//if(cadena[i]<'A'||(cadena[i]>'Z'&&cadena[i]<'a')||(cadena[i]>'z'&&cadena[i]<'ñ')||cadena[i]>'Ñ'){
 			if(cadena[i]<32||(cadena[i]>32&&cadena[i]<65)||(cadena[i]>90&&cadena[i]<97)||(cadena[i]>122&&cadena[i]<164)||cadena[i]>165){
 				retorno=0;
 				break;
@@ -416,6 +130,14 @@ int esTextoBasico(char* cadena){
 		}
 	return retorno;
 }
+/// @brief funcion final para pedir un entero, utilizando varias funciones que le dan seguridad y otros agregando parametros como Rango y Reintentos.
+///
+/// @param pResultado - puntero donde se guardara el numero ingresado por el usuario
+/// @param mensaje	- mensaje en pantalla antes de pedir al usuario ingresar el numero.
+/// @param mensajeError - mensaje de error por si el usuario no ingresa un numero valido.
+/// @param minimo - el minimo valor aceptado.
+/// @param maximo - el maximo valor aceptado
+/// @param reintentos - la cantidad de reintentos por si falla constantemente.
 void utn_getIntRango(int* pResultado, char* mensaje,char* mensajeError,int minimo, int maximo, int reintentos){
 
 	int buffer;
@@ -433,6 +155,13 @@ void utn_getIntRango(int* pResultado, char* mensaje,char* mensajeError,int minim
 	}
 
 }
+/// @brief funcion final para pedir un Nombre o Apellido, utilizando varias funciones que le dan seguridad y otros agregando parametros como mensaje, mensaje de error y Reintentos.
+///
+/// @param pResultado - el puntero donde se guarde lo ingresado por el usuario
+/// @param tam - tamaño del puntero, para asegurarnos de no desbordar el vector.
+/// @param mensaje	mensaje que vera el usuario antes de pedirle que ingrese datos
+/// @param mensajeError - el mensaje que se mostrara si el usuario no ingresa datos validos.
+/// @param reintentos - la cantidad de reintentos por si falla constantemente.
 void utn_getCharNombre(char* pResultado,int tam, char* mensaje,char* mensajeError, int reintentos){
 	char buffer[4096];
 	if(pResultado!=NULL&&mensaje!=NULL&&mensajeError!=NULL&&reintentos>=0){
@@ -448,6 +177,10 @@ void utn_getCharNombre(char* pResultado,int tam, char* mensaje,char* mensajeErro
 		}while(reintentos>=0);
 	}
 }
+/// @brief toma una cadena de caracteres y devuelve la misma cadena con la primer letra de cada palabra mayuscula
+///
+/// @param mensaje - el vector char que se modificara
+/// @return
 int PrimerasLetrasMayuscula(char*mensaje){
 	int i;
 	mensaje[0]=toupper(mensaje[0]);
@@ -459,28 +192,41 @@ int PrimerasLetrasMayuscula(char*mensaje){
 	}
 	return 1;
 }
+/// @brief acomoda el nombre y el apellido en el siguiente formato: Apellido, PrimerNombre SegundoNombre ...
+///
+/// @param nombre - el vector char donde se encuentra el nombre
+/// @param apellido - el vector char donde se encuentra el apellido
+/// @param nombreCompleto - el puntero del vector char donde se devolvera el nombre y apellido concatenados
+/// @param tam - el tamaño del puntero nombreCompleto para asegurar que no se desbordara el vector
+/// @return
 int ConcatenarNombreYApellido(char*nombre,char*apellido,char*nombreCompleto,int tam){
 	int retorno=0;
 	snprintf(nombreCompleto,tam,"%s, %s",apellido,nombre);
 	retorno=PrimerasLetrasMayuscula(nombreCompleto);
 	return retorno;
 }
-
-void Menu(int *pResultado,int*A,int*B,float*x,float*y){
-	char strResultado[8];
+/// @brief Menu que mostrara el programa constantemente y pide ingresar la opcion que usuario quiera
+///
+/// @param pResultado - puntero que devolvera la opcion que el usuario haya ingresado.
+/// @param banderaA - bandera del numero A.
+/// @param banderaB - bandera del numero B.
+/// @param A - puntero del primer operador.
+/// @param B - puntero del segundo operador.
+void Menu(int *pOpcion,int*banderaA,int*banderaB,float*A,float*B){
+	char strResultado[15];
 	printf("\n=================MENU=================\n");
-	if(*A==0){
+	if(*banderaA==0){
 		printf("||1. Ingresar operando A.\n");
 	}
 	else{
-		LimpiarCerosDecimales(*x,strResultado);
+		LimpiarCerosDecimales(*A,strResultado);
 		printf("||1.Modificar operando A. \t |A=%s|\n",strResultado);
 	}
-	if(*B==0){
+	if(*banderaB==0){
 		printf("||2. Ingresar operando B.\n");
 		}
 		else{
-			LimpiarCerosDecimales(*y,strResultado);
+			LimpiarCerosDecimales(*B,strResultado);
 			printf("||2.Modificar operando B. \t |B=%s|\n",strResultado);
 		}
 		printf("||3. Calcular todas las operaciones.\n"
@@ -488,25 +234,45 @@ void Menu(int *pResultado,int*A,int*B,float*x,float*y){
 			"||5. Salir.\n"
 			"=======================================\n");
 
-	utn_getIntRango(pResultado,"Ingrese la opcion elegida: ","ERROR! NUMERO INVALIDO!",1,5,99);
+	utn_getIntRango(pOpcion,"Ingrese la opcion elegida: ","ERROR! NUMERO INVALIDO!",1,5,99);
 
 
 }
+/// @brief suma los 2 numeros que se le pasan
+///
+/// @param a numero uno
+/// @param b numero dos
+/// @return retorna el resultado
 float Sumar(float a, float b){
 	float resultado;
 	resultado=a+b;
 	return resultado;
 }
+/// @brief resta los 2 numeros que se le pasan
+///
+/// @param a numero uno
+/// @param b numero dos
+/// @return retorna el resultado
 float Restar(float a, float b){
 	float resultado;
 	resultado=a-b;
 	return resultado;
 }
+/// @brief Multiplica los 2 numeros que se le pasan
+///
+/// @param a numero uno
+/// @param b numero dos
+/// @return retorna el resultado
 float Multiplicar(float a, float b){
 	float resultado;
 	resultado=a*b;
 	return resultado;
 }
+/// @brief Divide los 2 numeros que se le pasan, checkea que el segundo numero no sea 0
+///
+/// @param a numero uno
+/// @param b numero dos
+/// @return retorna el resultado
 int Dividir(float a, float b,float*pDivision){
 	int retorno;
 	if(b!=0.0){
@@ -519,7 +285,10 @@ int Dividir(float a, float b,float*pDivision){
 	}
 	return retorno;
 }
-
+/// @brief el factorial del numero que se le ingresa
+///
+/// @param a numero ingresado
+/// @return retorna el resultados
 int Factorial(float a,float*pResultado){
 	int i;
 	int retorno;
@@ -538,6 +307,13 @@ int Factorial(float a,float*pResultado){
 
 	return retorno;
 }
+/// @brief funcion final para pedir un numero int, utilizando varias funciones que le dan seguridad y otros agregando parametros como mensaje, mensaje de error y Reintentos.
+///
+///
+/// @param pResultado - puntero que devuelve el numero ingresado
+/// @param mensaje - mensaje que se le muestra al usuario antes de pedirle un numero
+/// @param mensajeError - mensaje de error que se le muestra al usuario si ingresa algun caracter fuera de los permitidos
+/// @param reintentos - cuantos intentos tiene el usuario de poder llegar a ingresar un numero correctamente
 void utn_getInt(int* pResultado, char* mensaje,char* mensajeError, int reintentos){
 
 	int buffer;
@@ -554,6 +330,14 @@ void utn_getInt(int* pResultado, char* mensaje,char* mensajeError, int reintento
 		}while(reintentos>=0);
 	}
 }
+/// @brief funcion final para pedir un numero float, utilizando varias funciones que le dan seguridad y otros agregando parametros como mensaje, mensaje de error y Reintentos.
+///
+///
+/// @param pResultado - puntero que devuelve el numero ingresado
+/// @param mensaje - mensaje que se le muestra al usuario antes de pedirle un numero
+/// @param mensajeError - mensaje de error que se le muestra al usuario si ingresa algun caracter fuera de los permitidos
+/// @param reintentos - cuantos intentos tiene el usuario de poder llegar a ingresar un numero correctamente
+
 void utn_getFloat(float* pResultado, char* mensaje,char* mensajeError, int reintentos){
 
 	float buffer;
@@ -570,6 +354,10 @@ void utn_getFloat(float* pResultado, char* mensaje,char* mensajeError, int reint
 		}while(reintentos>=0);
 	}
 }
+/// @brief funcion para limpar los ceros a la derecha de la parte decimal, el resultado lo devuelve en forma de string, asi que solo se usa para mostrar
+///
+/// @param numeroAMostrar - el numero float que se lo quiere dejar bonito :D
+/// @param resultado - el string del numero con TRES decimales sin ceros a la derecha
 void LimpiarCerosDecimales (float numeroAMostrar, char*resultado) {
 	char aux[20];
 	int i;
@@ -593,6 +381,7 @@ void LimpiarCerosDecimales (float numeroAMostrar, char*resultado) {
 
 
 
+/// @brief Firma de que programa termino. muestra la firma y 5 segundos despues el programa finaliza.
 
 void Firma(void){
 
