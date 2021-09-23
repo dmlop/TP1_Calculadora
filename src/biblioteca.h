@@ -15,11 +15,7 @@ int getChar(char* pResultado, int tam);
 int PrimerasLetrasMayuscula(char*mensaje);
 int ConcatenarNombreYApellido(char*,char*,char*,int);
 void Menu(int *pOpcion,int*banderaA,int*banderaB,float*A,float*B);
-float Sumar(float a, float b);
-float Restar(float a, float b);
-float Multiplicar(float a, float b);
-int Dividir(float a, float b,float*pDivision);
-int Factorial(float numero,float*pResultado);
+
 void utn_getInt(int* pResultado, char* mensaje,char* mensajeError,int reintentos);
 void utn_getFloat(float* pResultado, char* mensaje,char* mensajeError,int reintentos);
 void LimpiarCerosDecimales (float numeroAMostrar, char*resultado);

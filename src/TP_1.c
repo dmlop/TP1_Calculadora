@@ -28,6 +28,7 @@ biblioteca aparte,que contenga las funciones para realizar las cinco operaciones
 #include <stdio.h>
 #include <stdlib.h>
 #include "biblioteca.h"
+#include "fMatematicas.h"
 #include <string.h>
 #include <ctype.h>
 #include <conio.h>
