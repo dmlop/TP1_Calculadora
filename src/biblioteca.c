@@ -188,29 +188,6 @@ void Menu(int *pOpcion,int*banderaA,int*banderaB,float*A,float*B){
 
 }
 
-/// @brief funcion final para pedir un numero int, utilizando varias funciones que le dan seguridad y otros agregando parametros como mensaje, mensaje de error y Reintentos.
-///
-///
-/// @param pResultado - puntero que devuelve el numero ingresado
-/// @param mensaje - mensaje que se le muestra al usuario antes de pedirle un numero
-/// @param mensajeError - mensaje de error que se le muestra al usuario si ingresa algun caracter fuera de los permitidos
-/// @param reintentos - cuantos intentos tiene el usuario de poder llegar a ingresar un numero correctamente
-void utn_getInt(int* pResultado, char* mensaje,char* mensajeError, int reintentos){
-
-	int buffer;
-	if(pResultado!=NULL&&mensaje!=NULL&&mensajeError!=NULL&&reintentos>=0){
-		do{
-			printf("%s",mensaje);
-			if(getInt(&buffer)==0){
-				*pResultado=buffer;
-				break;
-			}
-			printf("%s",mensajeError);
-			reintentos--;
-
-		}while(reintentos>=0);
-	}
-}
 /// @brief funcion final para pedir un numero float, utilizando varias funciones que le dan seguridad y otros agregando parametros como mensaje, mensaje de error y Reintentos.
 ///
 ///

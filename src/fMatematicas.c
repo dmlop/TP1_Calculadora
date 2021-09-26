@@ -56,29 +56,24 @@ int Factorial(float a,long *pResultado){
 	int i;
 	int retorno;
 
-	if(a==0){
-		retorno=1;
-		*pResultado=1;
-	}
-	else{
-		if(a==(int)a){
-			if(a==0){
-					retorno=1;
-					*pResultado=1;
-			}
-			else{
-				if(a>0){
-					retorno=1;
-					for(i=(a-1);i>0;i-- ){
-						a*=i;
-					}
-				}
-			}
-			*pResultado=a;
+	if(a==(int)a){
+		if(a==0){
+				retorno=1;
+				*pResultado=1;
 		}
 		else{
-			retorno=0;
+			if(a>0){
+				retorno=1;
+				for(i=(a-1);i>0;i-- ){
+					a*=i;
+				}
 			}
+		}
+		*pResultado=a;
 	}
+	else{
+		retorno=0;
+	}
+
 	return retorno;
 }
