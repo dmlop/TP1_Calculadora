@@ -6,8 +6,8 @@
 /// @param a numero uno
 /// @param b numero dos
 /// @return retorna el resultado
-float Sumar(float a, float b){
-	float resultado;
+long Sumar(float a, float b){
+	long resultado;
 	resultado=a+b;
 	return resultado;
 }
@@ -16,8 +16,8 @@ float Sumar(float a, float b){
 /// @param a numero uno
 /// @param b numero dos
 /// @return retorna el resultado
-float Restar(float a, float b){
-	float resultado;
+long Restar(float a, float b){
+	long resultado;
 	resultado=a-b;
 	return resultado;
 }
@@ -26,8 +26,8 @@ float Restar(float a, float b){
 /// @param a numero uno
 /// @param b numero dos
 /// @return retorna el resultado
-float Multiplicar(float a, float b){
-	float resultado;
+long Multiplicar(float a, float b){
+	long resultado;
 	resultado=a*b;
 	return resultado;
 }
@@ -36,7 +36,7 @@ float Multiplicar(float a, float b){
 /// @param a numero uno
 /// @param b numero dos
 /// @return retorna el resultado
-int Dividir(float a, float b,float*pDivision){
+int Dividir(float a, float b,long *pDivision){
 	int retorno;
 	if(b!=0.0){
 
@@ -52,21 +52,33 @@ int Dividir(float a, float b,float*pDivision){
 ///
 /// @param a numero ingresado
 /// @return retorna el resultados
-int Factorial(float a,float*pResultado){
+int Factorial(float a,long *pResultado){
 	int i;
 	int retorno;
 
-	if(a==(int)a){
-			retorno=1;
-			for(i=(a-1);i>1;i-- ){
-				a*=i;
+	if(a==0){
+		retorno=1;
+		*pResultado=1;
+	}
+	else{
+		if(a==(int)a){
+			if(a==0){
+					retorno=1;
+					*pResultado=1;
+			}
+			else{
+				if(a>0){
+					retorno=1;
+					for(i=(a-1);i>0;i-- ){
+						a*=i;
+					}
+				}
 			}
 			*pResultado=a;
 		}
 		else{
-
 			retorno=0;
-		}
-
+			}
+	}
 	return retorno;
 }

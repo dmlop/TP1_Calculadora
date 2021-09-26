@@ -1,4 +1,8 @@
 /*
+ * Daniel Manresa
+ * Divicion C
+ * DNI 34940336
+
 Enunciado
 Hacer una calculadora. Para ello el programa iniciará y contará con
 un menú de opciones:
@@ -23,19 +27,16 @@ biblioteca aparte,que contenga las funciones para realizar las cinco operaciones
 (donde dice “x” e “y” en el ejemplo, se debe mostrar el número cargado)
 • Deberán contemplarse los casos de error (división por cero, etc)
 • Documentar todas las funciones
- */
-
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "biblioteca.h"
 #include "fMatematicas.h"
 #include <string.h>
 #include <ctype.h>
-#include <conio.h>
 #include <windows.h>
 
 int main(void) {
-
 	setbuf(stdout,NULL);
 
 	float x;
@@ -43,7 +44,7 @@ int main(void) {
 	char strX[20];
 	char strY[20];
 	int opcion;
-	float resultado;
+	long resultado;
 	char strResultado[20];
 	char mensaje[4000];
 	char aux[80];
@@ -56,7 +57,7 @@ int main(void) {
 		switch (opcion){
 			case 1:
 				system("cls");
-				utn_getFloat(&x,"Ingrese el valor de A:  ","El numero ingresado NO ES VALIDO. Vuelva a ingresarlo:  ",20);
+				utn_getFloat(&x,"Ingrese el valor de A:  ","El numero ingresado NO ES VALIDO!!!",20);
 				banderaA=1;
 				sprintf(aux,"----->Aun no se calcularon las operaciones!\n");
 				strcpy(mensaje,aux);
@@ -64,7 +65,7 @@ int main(void) {
 				break;
 			case 2:
 				system("cls");
-				utn_getFloat(&y,"Ingrese el valor de B:  ","El numero ingresado NO ES VALIDO. Vuelva a ingresarlo:  ",20);
+				utn_getFloat(&y,"Ingrese el valor de B:  ","El numero ingresado NO ES VALIDO!!!",20);
 				banderaB=1;
 				sprintf(aux,"----->Aun no se calcularon las operaciones!\n");
 				strcpy(mensaje,aux);
@@ -95,21 +96,32 @@ int main(void) {
 						sprintf(aux,"d) El resultado de %s/%s es: %s\n",strX,strY,strResultado);
 						strcat(mensaje,aux);
 					}
-					if(Factorial(x,&resultado)==0){
-						strcat(mensaje,"e) A es incompatible para hacer su factorial ");
+					if(x>13){
+						strcat(mensaje,"e) A es demaciado grande para hacer su factorial ");
 					}
 					else{
-						LimpiarCerosDecimales(resultado,strResultado);
-						sprintf(aux,"e) El factorial de %s es: %s ",strX,strResultado);
-						strcat(mensaje,aux);
+						if(Factorial(x,&resultado)==0){
+							strcat(mensaje,"e) A es incompatible para hacer su factorial ");
+						}
+						else{
+							LimpiarCerosDecimales(resultado,strResultado);
+							sprintf(aux,"e) El factorial de %s es: %s ",strX,strResultado);
+							strcat(mensaje,aux);
+						}
 					}
-					if(Factorial(y,&resultado)==0){
-						strcat(mensaje,"Y B es incompatible para hacer su factorial\n");
+					if(y>13){
+						strcat(mensaje,"y B es demaciado grande para hacer su factorial ");
 					}
 					else{
-						LimpiarCerosDecimales(resultado,strResultado);
-						sprintf(aux,"Y el factorial de %s es: %s ",strY,strResultado);
-						strcat(mensaje,aux);
+						if(Factorial(y,&resultado)==0){
+						strcat(mensaje,"y B es incompatible para hacer su factorial\n");
+						}
+
+						else{
+							LimpiarCerosDecimales(resultado,strResultado);
+							sprintf(aux,"y el factorial de %s es: %s ",strY,strResultado);
+							strcat(mensaje,aux);
+						}
 					}
 					banderaResultados=1;
 				}
@@ -122,16 +134,12 @@ int main(void) {
 				else{
 					printf("%s",mensaje);
 				}
-
 				break;
 			case 5:
 				system("cls");
 				Firma();
 				break;
 		}
-
-
 	}while(opcion!=5);
-
 	return EXIT_SUCCESS;
 }

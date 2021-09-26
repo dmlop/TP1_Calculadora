@@ -4,7 +4,7 @@
 #include "biblioteca.h"
 #include <string.h>
 #include <ctype.h>
-#include <conio.h>
+
 #include <windows.h>
 /// @brief pide al usuario ingresar caracteres y de forma segura se guardan en una variable.
 ///
@@ -40,29 +40,14 @@ int getFloat(float* pResultado){
 	int retorno=1;
 	char buffer[4096];
 
-	if(myGets(buffer,sizeof(buffer))==0&&esNumericaFloat(buffer)){
+	if(myGets(buffer,sizeof(buffer))==0&&esNumericaFloat(buffer)&&strlen(buffer)<8){
 		retorno=0;
 		*pResultado=atof(buffer);
 	}
 
 	return retorno;
 }
-/// @brief Usa lo ingresado por el usuario y checkea si es "texto basico", aceptando solo: ESPACIOS, a-z,A-Z,ñ-Ñ.
-///
-/// @param pResultado - el puntero por el cual devuelve el vector char ingresado y validado.
-/// @param tam - es el tamaño del vector char, usado para que no desborde el vector
-/// @return retorna 0 si algun caracter no es "basico", y 1 si todos los todos los caracteres son basicos.
-int getChar(char* pResultado, int tam){
-	int retorno=0;
-	char buffer[4096];
 
-	if(myGets(buffer,tam)==0&&esTextoBasico(buffer)==1){
-		retorno=1;
-		strncpy(pResultado,buffer,tam);
-	}
-
-	return retorno;
-}
 /// @brief toma una cadena de caracteres y checkea que sea numerica del tipo Int
 ///
 /// @param cadena - la cadena de caracteres a checkear
@@ -114,22 +99,7 @@ int esNumericaFloat(char* cadena){
 	}
 	return retorno;
 }
-/// @brief checkea si es "texto basico", aceptando solo: ESPACIOS, a-z,A-Z,ñ-Ñ.
-///
-/// @param cadena - la cadena de caracteres a checkear
-/// @return retorna 1 si la cadena es denominada como "texto basico" sino retorna 0.
-int esTextoBasico(char* cadena){
-	int retorno= 1;
-		int i;
 
-		for(i=0;cadena[i]!='\0';i++){
-			if(cadena[i]<32||(cadena[i]>32&&cadena[i]<65)||(cadena[i]>90&&cadena[i]<97)||(cadena[i]>122&&cadena[i]<164)||cadena[i]>165){
-				retorno=0;
-				break;
-			}
-		}
-	return retorno;
-}
 /// @brief funcion final para pedir un entero, utilizando varias funciones que le dan seguridad y otros agregando parametros como Rango y Reintentos.
 ///
 /// @param pResultado - puntero donde se guardara el numero ingresado por el usuario
@@ -155,28 +125,7 @@ void utn_getIntRango(int* pResultado, char* mensaje,char* mensajeError,int minim
 	}
 
 }
-/// @brief funcion final para pedir un Nombre o Apellido, utilizando varias funciones que le dan seguridad y otros agregando parametros como mensaje, mensaje de error y Reintentos.
-///
-/// @param pResultado - el puntero donde se guarde lo ingresado por el usuario
-/// @param tam - tamaño del puntero, para asegurarnos de no desbordar el vector.
-/// @param mensaje	mensaje que vera el usuario antes de pedirle que ingrese datos
-/// @param mensajeError - el mensaje que se mostrara si el usuario no ingresa datos validos.
-/// @param reintentos - la cantidad de reintentos por si falla constantemente.
-void utn_getCharNombre(char* pResultado,int tam, char* mensaje,char* mensajeError, int reintentos){
-	char buffer[4096];
-	if(pResultado!=NULL&&mensaje!=NULL&&mensajeError!=NULL&&reintentos>=0){
-		do{
-			printf("%s",mensaje);
-			if(getChar(buffer,tam)==1){
-				strncpy(pResultado,buffer,tam);
-				break;
-			}
-			printf("%s",mensajeError);
-			reintentos--;
 
-		}while(reintentos>=0);
-	}
-}
 /// @brief toma una cadena de caracteres y devuelve la misma cadena con la primer letra de cada palabra mayuscula
 ///
 /// @param mensaje - el vector char que se modificara
@@ -234,7 +183,7 @@ void Menu(int *pOpcion,int*banderaA,int*banderaB,float*A,float*B){
 			"||5. Salir.\n"
 			"=======================================\n");
 
-	utn_getIntRango(pOpcion,"Ingrese la opcion elegida: ","ERROR! NUMERO INVALIDO!",1,5,99);
+	utn_getIntRango(pOpcion,"Ingrese la opcion elegida: ","ERROR! NUMERO INVALIDO!\n",1,5,99);
 
 
 }

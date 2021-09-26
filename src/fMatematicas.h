@@ -8,10 +8,10 @@
 #ifndef FMATEMATICAS_H_
 #define FMATEMATICAS_H_
 
-float Sumar(float a, float b);
-float Restar(float a, float b);
-float Multiplicar(float a, float b);
-int Dividir(float a, float b,float*pDivision);
-int Factorial(float numero,float*pResultado);
+long Sumar(float a, float b);
+long Restar(float a, float b);
+long Multiplicar(float a, float b);
+int Dividir(float a, float b,long *pDivision);
+int Factorial(float numero,long *pResultado);
 
 #endif /* FMATEMATICAS_H_ */

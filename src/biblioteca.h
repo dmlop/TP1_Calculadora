@@ -9,8 +9,6 @@ int getFloat(float* pResultado);
 int esNumericaInt(char* cadena);
 int esNumericaFloat(char* cadena);
 void utn_getNumeroRango(int*, char*,char*,int,int,int);
-int esTextoBasico(char* cadena);
-void utn_getCharNombre(char*,int, char*,char*,int);
 int getChar(char* pResultado, int tam);
 int PrimerasLetrasMayuscula(char*mensaje);
 int ConcatenarNombreYApellido(char*,char*,char*,int);
